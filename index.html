@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en" data-theme="b">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Dina Hamza — Graphic Designer, Visual Artist & Art Instructor. Transforming ideas into memorable visual experiences through brand identity, illustration and motion."
+    />
+    <meta name="theme-color" content="#F2F1EA" />
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap"
+      rel="stylesheet"
+    />
+    <!--
+      One provider for the three theme faces. css2 serves Latin via
+      unicode-range and every face carries font-display: swap. The
+      stylesheet is preloaded because a heading is the LCP element and
+      the font request is otherwise only discovered after CSS parses.
+
+      Inter is loaded as a SINGLE GLYPH (&text=%26). Archivo's own
+      ampersand is an Et-form that reads as a reversed 3 at heavy
+      weights, so themes b and c put Inter first in the display stack:
+      it supplies U+0026 and nothing else, and every other character
+      falls through to Archivo. See src/styles/themes.css.
+    -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,800;1,400;1,500;1,800&family=Instrument+Serif:ital@0;1&family=Inter:wght@500;800&text=%26&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,800;1,400;1,500;1,800&family=Instrument+Serif:ital@0;1&family=Inter:wght@500;800&text=%26&display=swap" />
+
+    <!--
+      Hero corridor: preload only the cards that are large on the first
+      frame. Keep in sync with the tail of src/data/streamImages.ts.
+    -->
+    <link rel="preload" as="image" type="image/webp" href="/stream/art-warm-hijab.webp" media="(min-width: 768px)" />
+    <link rel="preload" as="image" type="image/webp" href="/stream/art-butterflies.webp" media="(min-width: 768px)" />
+    <link rel="preload" as="image" type="image/webp" href="/stream/art-pink-butterflies.webp" media="(min-width: 768px)" />
+    <link rel="preload" as="image" type="image/webp" href="/stream/art-girl-doll.webp" media="(min-width: 768px)" />
+    <link rel="preload" as="image" type="image/webp" href="/stream/art-curly-bag.webp" media="(min-width: 768px)" />
+    <link rel="preload" as="image" type="image/webp" href="/stream/art-blue-eyes.webp" media="(min-width: 768px)" />
+    <link rel="preload" as="image" type="image/webp" href="/stream/sm/art-amazigh.webp" media="(max-width: 767.98px)" />
+    <link rel="preload" as="image" type="image/webp" href="/stream/sm/art-pink-profile.webp" media="(max-width: 767.98px)" />
+    <link rel="preload" as="image" type="image/webp" href="/stream/sm/art-blue-eyes.webp" media="(max-width: 767.98px)" />
+
+    <!--
+      Theme switch. Runs before first paint so there is no flash, and
+      html already carries data-theme so even this script failing
+      leaves a valid theme. Compare live with ?theme=a | b | c.
+    -->
+    <script>
+      (function () {
+        try {
+          var t = new URLSearchParams(location.search).get('theme');
+          if (t === 'a' || t === 'b' || t === 'c') {
+            document.documentElement.setAttribute('data-theme', t);
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <title>Dina Hamza — Graphic Designer & Visual Artist</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

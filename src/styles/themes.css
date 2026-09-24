@@ -1,0 +1,142 @@
+/* ==================================================================== *
+ *  SITE-WIDE TYPOGRAPHY THEMES
+ *
+ *  Three complete directions, switched by one attribute on <html>:
+ *
+ *      <html data-theme="a">   Gallery
+ *      <html data-theme="b">   Studio        (default)
+ *      <html data-theme="c">   Contrast pair
+ *
+ *  ?theme=a | b | c in the URL overrides it live (see the inline script
+ *  in index.html, which runs before first paint so there is no flash).
+ *
+ *  Each block sets only the FACES and the metrics that depend on them.
+ *  The six-step size scale, the spacing scale and the colour roles are
+ *  unchanged and shared — a heavy grotesk and a high-contrast serif
+ *  need different tracking and weight at the same size, not different
+ *  sizes.
+ * ==================================================================== */
+
+/* -------------------------------------------------------------------- *
+ *  A — GALLERY
+ *  Refined and quiet. Instrument Serif is a high-contrast display serif
+ *  with a single weight, so hierarchy comes from size alone. Its
+ *  ampersand is conventional, so no override is needed here.
+ * -------------------------------------------------------------------- */
+[data-theme="a"] {
+  --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --font-body: "General Sans", "Inter", system-ui, sans-serif;
+  --body-features: "ss01", "cv01";
+
+  --fw-heading: 400;
+
+  --lh-display: 0.96;
+  --lh-h1: 1;
+  --lh-h2: 1.04;
+  --lh-h3: 1.2;
+
+  --ls-display: -0.022em;
+  --ls-h1: -0.02em;
+  --ls-h2: -0.016em;
+  --ls-h3: -0.01em;
+
+  /* The hero subline, in a desaturated warm neutral rather than a
+     colour — nothing in the type should compete with the paintings. */
+  --hero-sub-family: var(--font-display);
+  --hero-sub-style: italic;
+  --hero-sub-weight: 400;
+  --hero-sub-case: none;
+  --hero-sub-colour: var(--c-muted);
+  --hero-sub-size: clamp(1.5rem, 0.85rem + 1.9vw, 2.25rem); /* ≥24px: accent word is large text */
+}
+
+/* -------------------------------------------------------------------- *
+ *  B — STUDIO
+ *  One neo-grotesk everywhere, set tight and heavy. Single ink colour;
+ *  hierarchy is size and weight only, and the accent is reserved for
+ *  eyebrow rules and dots.
+ *
+ *  Archivo's ampersand is an "Et" form that reads as a reversed 3 at
+ *  heavy weights — the same class of problem Fraunces had. Inter is
+ *  loaded as a single-glyph subset and sits first in the display stack
+ *  so it supplies "&" and nothing else.
+ * -------------------------------------------------------------------- */
+[data-theme="b"] {
+  --font-display: "Inter", "Archivo", system-ui, sans-serif;
+  --font-body: "Archivo", system-ui, sans-serif;
+  --body-features: normal;
+
+  --fw-heading: 800;
+
+  --lh-display: 0.88;
+  --lh-h1: 0.94;
+  --lh-h2: 1.1;
+  --lh-h3: 1.15;
+
+  --ls-display: -0.045em;
+  --ls-h1: -0.04em;
+  --ls-h2: -0.025em;
+  --ls-h3: -0.02em;
+  --ls-body: -0.005em;
+
+  /* A real italic serif against the heavy grotesk name — the same
+     pairing as C. Minimum 24px: the accent word in it is 4.08:1, which
+     only passes as large text. */
+  --hero-sub-family: "Instrument Serif", Georgia, serif;
+  --hero-sub-style: italic;
+  --hero-sub-weight: 400;
+  --hero-sub-case: none;
+  --hero-sub-colour: var(--text-1);
+  --hero-sub-size: clamp(1.5rem, 0.9rem + 2.1vw, 2.5rem);
+}
+
+/* -------------------------------------------------------------------- *
+ *  C — CONTRAST PAIR
+ *  Heavy grotesk for the headings, a genuine italic serif for the hero
+ *  subline — a real italic, not a slanted sans. Same ampersand fix as B
+ *  because the display face is the same.
+ * -------------------------------------------------------------------- */
+[data-theme="c"] {
+  --font-display: "Inter", "Archivo", system-ui, sans-serif;
+  --font-body: "General Sans", "Inter", system-ui, sans-serif;
+  --body-features: "ss01", "cv01";
+
+  --fw-heading: 800;
+
+  --lh-display: 0.9;
+  --lh-h1: 0.95;
+  --lh-h2: 1.1;
+  --lh-h3: 1.15;
+
+  --ls-display: -0.042em;
+  --ls-h1: -0.038em;
+  --ls-h2: -0.025em;
+  --ls-h3: -0.018em;
+
+  --hero-sub-family: "Instrument Serif", Georgia, serif;
+  --hero-sub-style: italic;
+  --hero-sub-weight: 400;
+  --hero-sub-case: none;
+  --hero-sub-colour: var(--text-1);
+  --hero-sub-size: clamp(1.5rem, 0.9rem + 2.1vw, 2.5rem);
+}
+
+/* -------------------------------------------------------------------- *
+ *  The hero subline is the one place the three directions differ in
+ *  markup terms, so it gets its own hook rather than a utility stack.
+ * -------------------------------------------------------------------- */
+/* Descendant selector on purpose: this file is imported before
+   @tailwind utilities, so a bare .hero-sub would lose to .text-h2 at
+   equal specificity. Scoping to h1 puts it ahead without !important,
+   and lets the span carry no size utility at all. */
+h1 .hero-sub {
+  font-family: var(--hero-sub-family);
+  font-size: var(--hero-sub-size);
+  font-style: var(--hero-sub-style);
+  font-weight: var(--hero-sub-weight);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  text-transform: var(--hero-sub-case);
+  color: rgb(var(--hero-sub-colour));
+}
+

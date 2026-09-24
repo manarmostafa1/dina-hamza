@@ -1,0 +1,434 @@
+/* ==================================================================== *
+ *  DESIGN TOKENS — the single source of truth.
+ *
+ *  Nothing in this codebase should hard-code a spacing value, a font
+ *  size, a radius, a shadow, a colour or an easing. Everything comes
+ *  from here, surfaced to components either as a CSS custom property
+ *  or as a Tailwind token (see tailwind.config.js, which only maps
+ *  these variables — it defines no values of its own).
+ * ==================================================================== */
+
+:root {
+  /* ---------------------------------------------------------------- *
+   *  1. SPACING SCALE
+   *  Eleven steps. There is no step between them; if a gap "needs"
+   *  20px, it is a 16 or a 24.
+   * ---------------------------------------------------------------- */
+  --space-4: 0.25rem;
+  --space-8: 0.5rem;
+  --space-12: 0.75rem;
+  --space-16: 1rem;
+  --space-24: 1.5rem;
+  --space-32: 2rem;
+  --space-48: 3rem;
+  --space-64: 4rem;
+  --space-96: 6rem;
+  --space-128: 8rem;
+  --space-160: 10rem;
+
+  /* Vertical section rhythm — every section uses exactly this.
+     It steps through the scale at breakpoints; it is never a clamp(),
+     so section padding always lands on a real scale step. */
+  --section-py: 4.5rem; /* 72px phones; 96px from 768 */
+
+  /* Half-rhythm, used where two sections share one surface and the
+     boundary between them should read as a beat, not a full stop. */
+  --section-py-tight: var(--space-48);
+
+  /* Header rhythm — identical in every section.
+       eyebrow → title    --rhythm-eyebrow
+       header  → content  --shead-mb (margin-bottom of SectionHeader) */
+  --rhythm-eyebrow: var(--space-16);
+  /* SPACING LIVES ON WRAPPERS. Type classes never set a margin; every
+     stack of text is a flex column whose gap is one of these. */
+  --shead-mb: var(--space-48); /* SectionHeader → content: 48 mobile, 64 from 768 */
+
+  /* ---------------------------------------------------------------- *
+   *  2. LAYOUT
+   *  One container width, one gutter. Full-bleed is opt-in via
+   *  .bleed, never by a section quietly dropping the container.
+   * ---------------------------------------------------------------- */
+  --container: 1280px;
+  --gutter: 1.25rem; /* 20px phones; 32 from 768, 48 from 1280 */
+
+  /* Navigation. Sections that must clear the fixed nav (the hero safe
+     zone, the pinned gallery track) measure against this. */
+  --nav-h: 4.5rem; /* 72px */
+  --nav-top: var(--space-12);
+  --nav-total: calc(var(--nav-h) + var(--nav-top) * 2);
+
+  /* Every button on the site — pill or icon — is this tall. */
+  --btn-h: 3rem; /* 48px */
+
+  /* About: the one gap shared by the header grid and the carousel grid
+     below it, so the lead lines up with the slide copy. */
+  /* tags → controls. Off the scale on purpose (between 32 and 48). */
+  /* A larger pill: 52px, used where a section ends on its actions. */
+  --btn-h-lg: 3.25rem;
+
+
+  /* ---------------------------------------------------------------- *
+   *  3. TYPE SCALE — six steps, fluid.
+   *  eyebrow is not a seventh step: it is --fs-small in caps.
+   * ---------------------------------------------------------------- */
+  --fs-display: clamp(2.75rem, 1.55rem + 6vw, 6rem);
+  --fs-h1: clamp(2.25rem, 1.5rem + 3.75vw, 4rem);
+  --fs-h2: clamp(2rem, 4vw, 3.25rem); /* 32 → 52px, section titles */
+  --fs-h3: 1.25rem; /* 20px — every card and slide title */
+  --fs-body: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --fs-small: 0.8125rem; /* 13px — tags, buttons, fine print */
+  --fs-eyebrow: 0.75rem; /* 12px caps */
+  --fs-meta: 0.875rem; /* 14px — subtitle under an h3 */
+  --fs-card: 0.9375rem; /* 15px — body text inside cards and slides */
+  /* Wordmark in the navbar and footer. Not a heading, so it keeps its
+     own size rather than following the (now 20px) h3. */
+  --fs-logo: 1.625rem;
+  /* Intro paragraph beside or under a section title. Not a seventh
+     heading step — a larger body size for one job. */
+  --fs-lead: 1.125rem; /* 18px */
+  --fs-shead: clamp(2.5rem, 4.4vw, 3.75rem); /* 40 → 60px, every section title */
+
+  /* Headings run tight and optically negative; body runs open. */
+  --lh-display: 1.02;
+  --lh-h1: 1.05;
+  --lh-h2: 1.08;
+  --lh-h3: 1.15;
+  --lh-body: 1.6;
+  --lh-lead: 1.7; /* lead + card body */
+  --lh-title: 1.3; /* h3 */
+  --lh-small: 1.5;
+
+  --ls-display: -0.04em;
+  --ls-h1: -0.035em;
+  --ls-h2: -0.03em;
+  --ls-h3: -0.02em;
+  --ls-body: 0em;
+  --ls-small: 0em;
+  --ls-eyebrow: 0.2em;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  /* Overridden per theme. A 400-weight display serif and an
+     800-weight grotesk are each the heading weight for their own
+     direction, so this cannot be a constant. */
+  --fw-heading: 600;
+
+  /* ---------------------------------------------------------------- *
+   *  4. RADIUS — four steps.
+   *  --radius-surface is deliberately separate: it is the section-lift
+   *  radius, not a card radius, and no card may use it.
+   * ---------------------------------------------------------------- */
+  --radius-sm: 0.5rem; /* 8px  — chips, badges, inputs */
+  --radius-md: 0.875rem; /* 14px — small tiles, form fields */
+  --radius-lg: 1.5rem; /* 24px — every card on the site */
+  --radius-pill: 999px;
+  --radius-surface: 2rem; /* section lift only */
+
+  /* ---------------------------------------------------------------- *
+   *  5. ELEVATION — one scale, three steps.
+   *  Card = md. Floating/overlay = lg. Hairline separation = sm.
+   * ---------------------------------------------------------------- */
+  --shadow-sm: 0 1px 2px rgb(var(--c-ink) / 0.04), 0 2px 8px rgb(var(--c-ink) / 0.04);
+  --shadow-md: 0 2px 6px rgb(var(--c-ink) / 0.05),
+    0 16px 32px -16px rgb(var(--c-ink) / 0.14);
+  --shadow-lg: 0 4px 12px rgb(var(--c-ink) / 0.06),
+    0 40px 72px -36px rgb(var(--c-ink) / 0.24);
+
+  /* The section-lift shadow casts UPWARD only. A symmetric shadow on a
+     lifted section also spills down over the section below it, which is
+     what made the boundaries read as muddy grey bands. */
+  --shadow-lift: 0 -24px 48px -32px rgb(var(--c-ink) / 0.35);
+
+  /* ---------------------------------------------------------------- *
+   *  6. MOTION — two easings, two durations. That is the whole system.
+   * ---------------------------------------------------------------- */
+  --ease-entrance: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-entrance: 600ms;
+  --ease-ui: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-ui: 200ms;
+  --stagger: 70ms;
+  --enter-distance: 20px;
+
+  /* ---------------------------------------------------------------- *
+   *  7. COLOUR — "Sage and apricot".
+   *
+   *  PALETTE PRIMITIVES (--c-*). Fixed values, never re-themed: the
+   *  role tokens below point at these, and only things that must NOT
+   *  flip with a section's surface (the marquee tapes, lightboxes over
+   *  any section) use a primitive directly.
+   *
+   *  Contrast on the light bg #F2F1EA (WCAG 2.x):
+   *    ink 13.7 · muted 5.24 · sage-strong 5.25   → any text size
+   *    sage 3.59                                   → graphics only
+   *    apricot-strong 3.07                         → LARGE text only
+   *    apricot 1.76                                → decoration only
+   *  apricot-strong is #C57643, not the specified #D9824A: that measured
+   *  2.56:1 on the bg and fails even the 3:1 large-text bar. #C57643 is
+   *  the same hue, darkened until it clears 3:1 on bg and surface.
+   * ---------------------------------------------------------------- */
+  --c-bg: 242 241 234; /* #F2F1EA */
+  --c-surface: 250 250 245; /* #FAFAF5 */
+  --c-ink: 30 38 32; /* #1E2620, also the dark-section ground */
+  --c-muted: 95 102 92; /* #5F665C */
+  --c-border: 217 220 207; /* #D9DCCF */
+  --c-sage: 111 132 102; /* #6F8466 */
+  --c-sage-strong: 86 105 79; /* #56694F */
+  --c-sage-tint: 221 227 214; /* #DDE3D6 */
+  --c-apricot: 240 168 112; /* #F0A870 */
+  --c-apricot-strong: 197 118 67; /* #C57643, see note above */
+  --c-apricot-tint: 248 227 207; /* #F8E3CF */
+  --c-dark-surface: 38 48 42; /* #26302A */
+  --c-dark-border: 62 74 64; /* #3E4A40 */
+  --c-muted-dark: 185 191 178; /* #B9BFB2, 8.25:1 on ink */
+  --c-sage-dark: 168 184 158; /* #A8B89E */
+  /* Derived, not in the brief: a form field needs a 3:1 edge (WCAG
+     1.4.11). The dark border is 1.47:1 against the dark field; this is
+     the same hue lightened to 3.03:1. */
+  --c-dark-field-edge: 112 121 112; /* #707970 */
+  /* Derived: a hover / emphasis hairline one step above --c-border. */
+  --c-border-strong: 191 196 180; /* #BFC4B4 */
+  /* Derived: shadow colour for dark grounds (a shadow has to be darker
+     than the ink it falls on). */
+  --c-shade: 14 18 15;
+
+  /* ROLES — light surface ("the voice"). */
+  --surface-1: var(--c-bg); /* page ground */
+  --surface-2: var(--c-surface); /* cards, navbar */
+  --surface-3: var(--c-sage-tint); /* sunken / inset */
+
+  --text-1: var(--c-ink);
+  --text-2: var(--c-muted);
+  --text-3: var(--c-muted);
+
+  --border-1: var(--c-border);
+  --border-2: var(--c-border-strong);
+
+  /* Accent = sage. --accent is for graphics (rules, dots, bars, icons,
+     focus); --accent-text carries small accent-coloured copy;
+     --accent-fill is the accent as a BACKGROUND that carries text
+     (plain sage under cream is 3.59:1 and fails, so it is the strong
+     tone); --accent-contrast is the text on --accent-fill (5.25:1). */
+  --accent: var(--c-sage);
+  --accent-text: var(--c-sage-strong);
+  --accent-fill: var(--c-sage-strong);
+  --accent-contrast: var(--c-bg);
+  --focus: var(--c-sage);
+
+  /* Secondary accent = apricot. --accent-2 is decoration; --emph is the
+     emphasis colour for LARGE accent words and numbers (<em> in a section title,
+     "stay", the timeline years, the footer stars). */
+  --accent-2: var(--c-apricot);
+  --emph: var(--c-apricot-strong);
+
+  /* Glass (navbar): the surface, near-opaque, with the border token. */
+  --glass-bg: var(--c-surface) / 0.92;
+  --glass-border: var(--c-border);
+
+  --grain-blend: multiply;
+  color-scheme: light;
+
+  /* ---------------------------------------------------------------- *
+   *  8. SERVICES BENTO — component tokens.
+   *
+   *  The one component on the site specified off the shared scales:
+   *  the mock-up calls for a 20px gap/radius and 28/30 padding, which
+   *  sit between steps on purpose (tighter than --radius-lg, looser
+   *  than --radius-md). They live here, named, so the "no value
+   *  outside tokens.css" rule still holds and nothing else borrows
+   *  them by accident.
+   * ---------------------------------------------------------------- */
+  --bento-gap: 1.25rem; /* 20px */
+  --bento-radius: 1.25rem; /* 20px */
+  --bento-pad-y: var(--space-32); /* every card */
+  --bento-pad-x: var(--space-32);
+  --card-gap: 1.75rem; /* icon → text group → tags (minimum), 28px */
+  --card-text-gap: 0.625rem; /* title → text, 10px */
+  --tag-pad-y: 0.375rem; /* 6px — tags are 6px × 12px */
+
+  --bento-row: 43.125rem; /* 690px — desktop row, a minimum */
+  --bento-hero-cap: 28.75rem; /* 460px — the 2-column hero's height */
+  --bento-hero-min: 40rem; /* 640px — 1-column hero: mark above, copy below */
+  --bento-chip: 2.625rem; /* 42px */
+  --bento-icon: 1.1875rem; /* 19px */
+  --bento-icon-stroke: 1.7;
+
+  /* ---------------------------------------------------------------- *
+   *  13. CONTACT — the postcard.
+   *  On the paper #F6F1E6: label #5F665C 5.1 · hint #9A9E92 2.43 ·
+   *  sage-strong 5.28 · error #B84A2C 4.60 · ink 13.8.
+   *  (The brief's label #6B7268 was 4.41:1, so labels use #5F665C.)
+   * ---------------------------------------------------------------- */
+  --contact-py: 4.5rem; /* 72px phones; 120px from 768 */
+  --cfooter-giant: 22vw; /* footer background name; 17vw from 768 */
+  /* Footer tape: navbar height + navbar top offset + 40px, so the fixed
+     nav never covers it (128px desktop, 124px phones). */
+  --cfooter-tape-top: calc(var(--nav-h) + var(--nav-top) + 2.5rem);
+  --c-postcard: 246 241 230; /* #F6F1E6 paper */
+  --c-postcard-rule: 216 208 189; /* #D8D0BD ruled lines, divider */
+  --c-postcard-line: 207 198 177; /* #CFC6B1 chip + field lines */
+  --c-postcard-edge: 230 223 206; /* #E6DFCE stamp edge */
+  --c-postcard-hint: 154 158 146; /* #9A9E92 placeholder — 2.43:1, below AA, as requested */
+  --c-postcard-error: 184 74 44; /* #B84A2C */
+  --c-ink-raised: 43 53 48; /* #2B3530 — send button hover */
+
+  /* ---------------------------------------------------------------- *
+   *  12. PROJECT PAGE
+   * ---------------------------------------------------------------- */
+  --c-letterbox: 234 232 223; /* #EAE8DF — behind a letterboxed image */
+
+  /* ---------------------------------------------------------------- *
+   *  11. FEATURED PROJECTS — the inset dark panel.
+   * ---------------------------------------------------------------- */
+  --work-py: 4.5rem; /* 72px phones; 120px from 768 */
+  --work-radius: var(--radius-lg); /* 24px mobile; 40px from 768 */
+  --work-card-radius: 1.25rem; /* 20px, every card */
+  --c-card-shade: 20 26 22; /* #141A16 — the card title shade */
+  --ease-work: cubic-bezier(0.2, 0.8, 0.2, 1); /* image zoom, 700ms */
+
+  /* ---------------------------------------------------------------- *
+   *  10. ABOUT — "Designer by craft, artist at heart."
+   *  Two panels (sage = the designer, apricot = the artist) with a
+   *  taped polaroid bridging them. Panel inks are tuned to their own
+   *  tint; measured on it:
+   *    sage body #4A5249 6.18 · pill #56694F 4.54 · muted 4.53
+   *    apricot body #5A4A3E 6.80 · pill #8A4B22 5.43 · muted 4.77
+   * ---------------------------------------------------------------- */
+  --about-py: 4.5rem; /* 72px mobile; 112px from 768 */
+  --about-container: 1200px;
+  --about-block-gap: var(--space-64); /* header · stage · footer row */
+  --about-stage-h: 35rem; /* 560px */
+  --about-panel-h: 32.5rem; /* 520px */
+  --about-panel-top: 1.25rem; /* panels start 20px below the photo */
+  --about-panel-gap: var(--space-16);
+  --about-panel-pad: var(--space-48);
+  --about-panel-radius: 1.75rem; /* 28px */
+  --about-panel-copy: 20.625rem; /* 330px — never reaches the photo */
+  --about-polaroid-w: 23.75rem; /* 380px */
+  --about-photo-h: 26.25rem; /* 420px */
+  --about-caption-h: var(--space-64);
+  --about-tilt: -2.5deg;
+  --about-tape-w: 7rem; /* 112px */
+  --about-tape-h: 1.75rem; /* 28px */
+  --about-shadow: 0 24px 48px rgb(var(--c-ink) / 0.22);
+  --c-sage-body: 74 82 73; /* #4A5249 */
+  --c-sage-rule: 191 201 184; /* #BFC9B8 */
+  --c-apricot-body: 90 74 62; /* #5A4A3E */
+  --c-apricot-deep: 138 75 34; /* #8A4B22 */
+  --c-apricot-rule: 230 195 163; /* #E6C3A3 */
+  /* Teaching sketchbook + the road */
+  --c-paper: 251 250 244; /* #FBFAF4 page */
+  --c-paper-dot: 222 220 208; /* #DEDCD0 dot grid */
+  --c-paper-fold: 233 231 220; /* #E9E7DC spiral fold */
+  --c-pencil-wood: 233 214 189; /* #E9D6BD */
+  --c-pencil-metal: 201 204 194; /* #C9CCC2 */
+
+  /* ---------------------------------------------------------------- *
+   *  9. MARQUEE — two crossing tapes at the foot of the hero.
+   *  Mobile values here; the 768px step below sets tablet/desktop.
+   * ---------------------------------------------------------------- */
+  --fs-marquee: clamp(1rem, 1.8vw, 1.375rem); /* 16 → 22px, uppercase */
+  --fs-marquee-serif: clamp(1.25rem, 2.2vw, 1.75rem); /* 20 → 28px */
+  --ls-marquee: 0.12em;
+  --marquee-gap: 2.5rem; /* between every word and every star */
+  --marquee-sep-size: 0.75rem; /* 12px star */
+  --marquee-pad: 1rem; /* 16px, top and bottom of each tape */
+  --marquee-height: 6.875rem; /* 110px container */
+  --marquee-tape-width: 110vw; /* rotated ends never expose a corner */
+  --marquee-tilt-front: -1.5deg;
+  --marquee-tilt-back: 1.2deg;
+  --marquee-duration: 40s; /* generic row (footer) */
+  --marquee-duration-front: 35s;
+  --marquee-duration-back: 50s;
+  --marquee-fade: 10vw; /* back tape edge mask, measured from the screen edge */
+  --marquee-tape-shadow: 0 10px 30px rgb(var(--c-ink) / 0.25);
+
+  /* Warm tints — one family with the cream ground, no cool hues.
+     Contrast of --text-2 on each is in the Services.tsx header. */
+  --tint-sand: var(--c-sage-tint); /* Print */
+  --tint-clay: var(--c-sage-tint); /* Video & Motion */
+  --tint-stone: var(--c-apricot-tint); /* Presentation */
+  /* Icon chip on a SURFACE card. The brief says surface for every chip,
+     but a surface chip on a surface card is invisible, so on those two
+     cards the chip takes the page ground instead. */
+  --tint-chip: var(--c-bg);
+
+  /* The photographic hero card. Its own palette because it is a dark
+     card inside a light section — data-surface="dark" would re-theme
+     far more than one card needs. */
+  --feature-ground: var(--c-ink); /* shows until the image paints */
+  --feature-scrim: var(--c-ink);
+  --feature-eyebrow: var(--c-apricot); /* CORE SERVICE */
+  --feature-body: var(--c-muted-dark);
+}
+
+/* -------------------------------------------------------------------- *
+ *  DARK SURFACE ("the work"): projects, gallery, contact, footer —
+ *  sections where the artwork or the invitation is on display.
+ *  Applied per-section with data-surface="dark".
+ * -------------------------------------------------------------------- */
+[data-surface="dark"],
+.on-dark {
+  --surface-1: var(--c-ink); /* dark bg #1E2620 */
+  --surface-2: var(--c-dark-surface); /* cards on dark #26302A */
+  --surface-3: var(--c-ink);
+
+  --text-1: var(--c-bg); /* 13.7:1 */
+  --text-2: var(--c-muted-dark); /* 8.25:1 */
+  --text-3: var(--c-muted-dark);
+
+  --border-1: var(--c-dark-border); /* lines, card edges, pills */
+  --border-2: var(--c-dark-field-edge); /* form field edge, 3.03:1 */
+
+  /* On dark the accent is apricot (7.79:1), usable at any size. */
+  --accent: var(--c-apricot);
+  --accent-text: var(--c-apricot);
+  --accent-fill: var(--c-apricot);
+  --accent-contrast: var(--c-ink); /* ink on apricot 7.79:1 */
+  --focus: var(--c-sage-dark);
+  --emph: var(--c-apricot);
+
+  --shadow-sm: 0 1px 2px rgb(var(--c-shade) / 0.4);
+  --shadow-md: 0 2px 6px rgb(var(--c-shade) / 0.4),
+    0 16px 32px -16px rgb(var(--c-shade) / 0.6);
+  --shadow-lg: 0 4px 12px rgb(var(--c-shade) / 0.45),
+    0 40px 72px -36px rgb(var(--c-shade) / 0.7);
+  --shadow-lift: 0 -24px 48px -28px rgb(var(--c-shade) / 0.75);
+
+  --glass-bg: var(--c-dark-surface) / 0.88;
+  --glass-border: var(--c-dark-border);
+
+  --grain-blend: screen;
+  color-scheme: dark;
+}
+
+/* -------------------------------------------------------------------- *
+ *  RESPONSIVE STEPS — the only place the rhythm changes.
+ * -------------------------------------------------------------------- */
+@media (min-width: 768px) {
+  :root {
+    --marquee-height: 8.75rem; /* 140px */
+    --marquee-tilt-front: -2.5deg;
+    --marquee-tilt-back: 2deg;
+    --gutter: var(--space-32);
+    --section-py: var(--space-96);
+    --section-py-tight: var(--space-64);
+    --shead-mb: var(--space-64);
+    --about-py: 7rem; /* 112px */
+    --work-py: 7.5rem; /* 120px */
+    --contact-py: 7.5rem; /* 120px */
+    --cfooter-giant: 17vw;
+    --work-radius: 2.5rem; /* 40px */
+    --radius-surface: 2.5rem;
+    --nav-h: 4.5rem;
+    --nav-top: var(--space-16);
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --gutter: var(--space-48);
+    --section-py-tight: var(--space-96);
+    --radius-surface: 3rem;
+  }
+}
