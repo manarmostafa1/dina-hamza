@@ -262,86 +262,6 @@ export const portfolioProjects: PortfolioProject[] = [
     ]
   },
   {
-    "slug": "portfolio-6",
-    "folder": "Portfolio-6",
-    "title": "Project 06",
-    "category": "Social Media",
-    "year": "2026",
-    "description": "",
-    "cover": {
-      "src": "/Portfolio-6/WhatsApp%20Image%202026-07-21%20at%2011.26.19%20AM%20(1).jpeg",
-      "width": 1600,
-      "height": 1067
-    },
-    "images": [
-      {
-        "src": "/Portfolio-6/WhatsApp%20Image%202026-07-21%20at%2011.26.19%20AM%20(1).jpeg",
-        "width": 1600,
-        "height": 1067
-      },
-      {
-        "src": "/Portfolio-6/WhatsApp%20Image%202026-07-21%20at%2011.26.19%20AM%20(2).jpeg",
-        "width": 1600,
-        "height": 1067
-      },
-      {
-        "src": "/Portfolio-6/WhatsApp%20Image%202026-07-21%20at%2011.26.19%20AM.jpeg",
-        "width": 1600,
-        "height": 1067
-      }
-    ]
-  },
-  {
-    "slug": "portfolio-7",
-    "folder": "Portfolio-7",
-    "title": "Project 07",
-    "category": "Packaging",
-    "year": "2026",
-    "description": "",
-    "cover": {
-      "src": "/Portfolio-7/WhatsApp%20Image%202026-07-21%20at%2011.32.07%20AM.jpeg",
-      "width": 1200,
-      "height": 1600
-    },
-    "images": [
-      {
-        "src": "/Portfolio-7/WhatsApp%20Image%202026-07-21%20at%2011.32.07%20AM.jpeg",
-        "width": 1200,
-        "height": 1600
-      },
-      {
-        "src": "/Portfolio-7/WhatsApp%20Image%202026-07-21%20at%2011.32.08%20AM%20(1).jpeg",
-        "width": 1200,
-        "height": 1600
-      },
-      {
-        "src": "/Portfolio-7/WhatsApp%20Image%202026-07-21%20at%2011.32.08%20AM.jpeg",
-        "width": 1200,
-        "height": 1600
-      },
-      {
-        "src": "/Portfolio-7/WhatsApp%20Image%202026-07-21%20at%2011.32.09%20AM%20(1).jpeg",
-        "width": 1200,
-        "height": 1600
-      },
-      {
-        "src": "/Portfolio-7/WhatsApp%20Image%202026-07-21%20at%2011.32.09%20AM.jpeg",
-        "width": 1200,
-        "height": 1600
-      },
-      {
-        "src": "/Portfolio-7/WhatsApp%20Image%202026-07-21%20at%2011.32.10%20AM%20(1).jpeg",
-        "width": 1200,
-        "height": 1600
-      },
-      {
-        "src": "/Portfolio-7/WhatsApp%20Image%202026-07-21%20at%2011.32.10%20AM.jpeg",
-        "width": 1200,
-        "height": 1600
-      }
-    ]
-  },
-  {
     "slug": "portfolio-8",
     "folder": "Portfolio-8",
     "title": "Project 08",
@@ -883,7 +803,64 @@ export const portfolioProjects: PortfolioProject[] = [
         "src": "/Portfolio-15/10%20YEARS-33.jpg",
         "width": 6767,
         "height": 3779
+      },
+      {
+        "src": "/Portfolio-6/WhatsApp%20Image%202026-07-21%20at%2011.26.19%20AM%20(1).jpeg",
+        "width": 1600,
+        "height": 1067
+      },
+      {
+        "src": "/Portfolio-6/WhatsApp%20Image%202026-07-21%20at%2011.26.19%20AM%20(2).jpeg",
+        "width": 1600,
+        "height": 1067
+      },
+      {
+        "src": "/Portfolio-6/WhatsApp%20Image%202026-07-21%20at%2011.26.19%20AM.jpeg",
+        "width": 1600,
+        "height": 1067
+      },
+      {
+        "src": "/Portfolio-7/WhatsApp%20Image%202026-07-21%20at%2011.32.07%20AM.jpeg",
+        "width": 1200,
+        "height": 1600
+      },
+      {
+        "src": "/Portfolio-7/WhatsApp%20Image%202026-07-21%20at%2011.32.08%20AM%20(1).jpeg",
+        "width": 1200,
+        "height": 1600
+      },
+      {
+        "src": "/Portfolio-7/WhatsApp%20Image%202026-07-21%20at%2011.32.08%20AM.jpeg",
+        "width": 1200,
+        "height": 1600
+      },
+      {
+        "src": "/Portfolio-7/WhatsApp%20Image%202026-07-21%20at%2011.32.09%20AM%20(1).jpeg",
+        "width": 1200,
+        "height": 1600
+      },
+      {
+        "src": "/Portfolio-7/WhatsApp%20Image%202026-07-21%20at%2011.32.09%20AM.jpeg",
+        "width": 1200,
+        "height": 1600
+      },
+      {
+        "src": "/Portfolio-7/WhatsApp%20Image%202026-07-21%20at%2011.32.10%20AM%20(1).jpeg",
+        "width": 1200,
+        "height": 1600
+      },
+      {
+        "src": "/Portfolio-7/WhatsApp%20Image%202026-07-21%20at%2011.32.10%20AM.jpeg",
+        "width": 1200,
+        "height": 1600
       }
     ]
   }
 ];
+
+/** Old project URLs (merged folders, see MERGE_INTO in the generator)
+ *  → the slug of the project they are now part of. */
+export const projectRedirects: Record<string, string> = {
+  "portfolio-6": "portfolio-15",
+  "portfolio-7": "portfolio-15"
+};

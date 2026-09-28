@@ -8,7 +8,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import { getProject, getAdjacent, projects } from "@/data/portfolio";
+import { getProject, getAdjacent, projects, redirectFor } from "@/data/portfolio";
 import type { Project } from "@/data/portfolio";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { Eyebrow } from "@/components/ui/Eyebrow";
@@ -33,6 +33,15 @@ import { cn } from "@/lib/utils";
  * ------------------------------------------------------------------ */
 
 const pad = (n: number) => String(n).padStart(2, "0");
+
+/* "**text**" in the copy → <strong>text</strong>, asterisks dropped.
+   Split on the markers: the odd pieces are the bold ones. Plain text
+   nodes only, so nothing in the copy is ever parsed as HTML. */
+function withBold(text: string) {
+  return text
+    .split(/\*\*(.+?)\*\*/)
+    .map((piece, i) => (i % 2 ? <strong key={i}>{piece}</strong> : piece));
+}
 
 export default function ProjectDetail() {
   const { slug } = useParams();
@@ -97,6 +106,19 @@ export default function ProjectDetail() {
   /* a new project closes any open lightbox */
   useEffect(() => setActive(null), [slug]);
 
+  /* browser tab: "{title} · Dina Hamza", restored on the way out */
+  useEffect(() => {
+    if (!project) return;
+    const prev = document.title;
+    document.title = `${project.title} · Dina Hamza`;
+    return () => {
+      document.title = prev;
+    };
+  }, [project]);
+
+  /* an old URL of a project that was merged into another one */
+  const moved = slug ? redirectFor(slug) : undefined;
+  if (moved) return <Navigate to={`/work/${moved}`} replace />;
   if (!project || !adjacent) return <Navigate to="/" replace />;
   const { prev, next, index } = adjacent;
   const cover = project.banner;
@@ -121,9 +143,15 @@ export default function ProjectDetail() {
             <Reveal index={1}>
               <h1 className="case-title">{project.title}</h1>
             </Reveal>
-            <Reveal index={2}>
-              <p className="case-desc">{project.description}</p>
-            </Reveal>
+            {project.description.length > 0 && (
+              <Reveal index={2}>
+                <div className="case-desc">
+                  {project.description.map((para, i) => (
+                    <p key={i}>{withBold(para)}</p>
+                  ))}
+                </div>
+              </Reveal>
+            )}
           </header>
 
           {/* banner — eager, the page's largest image */}
