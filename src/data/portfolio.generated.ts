@@ -855,6 +855,116 @@ export const portfolioProjects: PortfolioProject[] = [
         "height": 1600
       }
     ]
+  },
+  {
+    "slug": "travel",
+    "folder": "travel",
+    "title": "Project 16",
+    "category": "Illustration",
+    "year": "2026",
+    "description": "",
+    "cover": {
+      "src": "/travel/003c46216899409.6787bb8ae7568.webp",
+      "width": 1920,
+      "height": 1920
+    },
+    "images": [
+      {
+        "src": "/travel/003c46216899409.6787bb8ae7568.webp",
+        "width": 1920,
+        "height": 1920
+      },
+      {
+        "src": "/travel/03b5f2216899409.6787bb8ae8ad0.webp",
+        "width": 1920,
+        "height": 1920
+      },
+      {
+        "src": "/travel/0406df216899409.6787bb8ae3cc3.webp",
+        "width": 1920,
+        "height": 1920
+      },
+      {
+        "src": "/travel/0729f6216899409.6787bb8ae56a9.webp",
+        "width": 1920,
+        "height": 1920
+      },
+      {
+        "src": "/travel/0e929d216899409.6787bb8ae30c1.webp",
+        "width": 1920,
+        "height": 1920
+      },
+      {
+        "src": "/travel/23130e216899409.6787bb8ae6bea.webp",
+        "width": 1920,
+        "height": 1920
+      },
+      {
+        "src": "/travel/3674e6216899409.6787bb8ae9af8.webp",
+        "width": 1920,
+        "height": 1912
+      },
+      {
+        "src": "/travel/3d043e216899409.6787bb8ae4b39.webp",
+        "width": 1920,
+        "height": 1920
+      },
+      {
+        "src": "/travel/47068b216899409.6787bb8ae2b1f.webp",
+        "width": 1920,
+        "height": 1920
+      },
+      {
+        "src": "/travel/4de2a5216899409.6787bb8ae63c8.webp",
+        "width": 1920,
+        "height": 1920
+      },
+      {
+        "src": "/travel/592ba8216899409.6787bb8aeb2e0.webp",
+        "width": 1920,
+        "height": 1920
+      },
+      {
+        "src": "/travel/73e09f216899409.6787bb8ae5bce.webp",
+        "width": 1920,
+        "height": 1920
+      },
+      {
+        "src": "/travel/76a29f216899409.6787bb8aec122.webp",
+        "width": 1920,
+        "height": 1920
+      },
+      {
+        "src": "/travel/b39b1c216899409.6787bb8aea68f.webp",
+        "width": 1920,
+        "height": 1920
+      },
+      {
+        "src": "/travel/b668be216899409.6787bb8ae45b9.webp",
+        "width": 1920,
+        "height": 1920
+      },
+      {
+        "src": "/travel/cd6b92216899409.6787bb8ae85b8.webp",
+        "width": 1920,
+        "height": 1920
+      },
+      {
+        "src": "/travel/d2b0ad216899409.6787bb8ae51b5.webp",
+        "width": 1920,
+        "height": 1920
+      },
+      {
+        "src": "/travel/d88fef216899409.6787bb8ae7ddc.webp",
+        "width": 1920,
+        "height": 1920
+      },
+      {
+        "src": "/travel/e96ef8216899409.6787bb8ae90f2.webp",
+        "width": 1920,
+        "height": 1920
+      }
+    ]
   }
 ];
 

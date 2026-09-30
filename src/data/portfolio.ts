@@ -7,12 +7,15 @@ import {
 import { FEATURED_ORDER, projectMeta } from "./projectNames";
 
 /** A project as the site uses it. `banner` is the first image and
- *  `gallery` every image after it, so between them they hold all of the
- *  project's images (`images` still lists them all, in order).
- *  `description` is one string per paragraph; **text** marks bold. */
-export type Project = Omit<PortfolioProject, "description"> & {
+ *  `gallery` every image after it (or all of them, banner included, with
+ *  bannerInGallery), so between them they hold all of the project's
+ *  images (`images` still lists them all, in order, once each).
+ *  `description` is one string per paragraph; **text** marks bold.
+ *  `year` is optional: a project without one shows no year anywhere. */
+export type Project = Omit<PortfolioProject, "description" | "year"> & {
   featured: boolean;
   description: string[];
+  year?: string;
   banner: PortfolioImage;
   gallery: PortfolioImage[];
 };
@@ -27,9 +30,12 @@ export const projects: Project[] = portfolioProjects.map((p) => {
     ...p,
     title: meta?.title ?? p.title,
     featured: meta?.featured ?? false,
+    category: meta?.category ?? p.category,
+    /* null in projectNames.ts = no year; undefined = the generated one */
+    year: meta?.year === null ? undefined : meta?.year ?? p.year,
     description: meta?.description ?? (p.description ? [p.description] : []),
     banner: p.images[0] ?? p.cover,
-    gallery: p.images.slice(1),
+    gallery: meta?.bannerInGallery ? p.images : p.images.slice(1),
   };
 });
 

@@ -13,14 +13,27 @@
  *    description  the project page copy, one string per paragraph,
  *                 always shown in full. **text** renders as bold.
  *
+ *  Optional:
+ *    category       replaces the generated category
+ *    year           replaces the generated year; null = no year (the
+ *                   eyebrow then shows just "category · NN / NN")
+ *    bannerInGallery  the gallery lists every image, the banner too
+ *                   (default: the gallery starts after the banner)
+ *
  *  A folder with no entry keeps its generated "Project NN" title and
  *  is not featured. Portfolio-6 and Portfolio-7 are part of
  *  Portfolio-15 (MERGE_INTO in the generator), so they have no entry.
  * ------------------------------------------------------------------ */
-export const projectMeta: Record<
-  string,
-  { title: string; featured: boolean; description: string[] }
-> = {
+export type ProjectMeta = {
+  title: string;
+  featured: boolean;
+  description: string[];
+  category?: string;
+  year?: string | null;
+  bannerInGallery?: boolean;
+};
+
+export const projectMeta: Record<string, ProjectMeta> = {
   "Portfolio-1": {
     title: `Summer Glow Campaign 2026`,
     featured: true,
@@ -112,6 +125,17 @@ export const projectMeta: Record<
     featured: true,
     description: [
       `To celebrate Everlast’s 10th anniversary, we developed a comprehensive visual campaign that reflects the brand’s journey, achievements, and commitment to excellence over the past decade. The project included social media creatives, promotional materials, and anniversary-themed branding designed to create a memorable and cohesive celebration across all touchpoints.`,
+    ],
+  },
+  /* public/travel — square (1:1) posts, listed after every Portfolio-N */
+  travel: {
+    title: `Social Media posts for travel company`,
+    featured: false,
+    category: `Social media`,
+    year: null,
+    bannerInGallery: true,
+    description: [
+      `A series of destination posts created for Book2Smile, a travel brand powered by Smile Makers, promoting trips to Paris, Kyoto, Lisbon, Thailand, Hawaii and Bali. Each post feels like a page from a travel scrapbook: torn-paper edges, layered photo prints and bold hand-lettered headlines invite people to discover each destination at a glance. A blue-to-purple frame, the same logo placement and a consistent "Powered by Smile Makers" signature keep the whole series instantly recognizable across the feed.`,
     ],
   },
 };

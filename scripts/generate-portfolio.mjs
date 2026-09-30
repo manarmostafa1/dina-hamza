@@ -34,6 +34,15 @@ const MERGE_INTO = {
   "Portfolio-7": "Portfolio-15",
 };
 
+/* Project folders that don't follow the Portfolio-N naming, listed
+   after all the Portfolio-N projects, in this order. Their files are
+   taken in plain A→Z name order: the natural sort used for Portfolio-N
+   ("img2" before "img10") reads hash-like names such as "0e92…" as the
+   number 0 and scrambles them. File names must be lowercase with no
+   spaces (they are URLs on a case-sensitive host). */
+const EXTRA_FOLDERS = ["travel"];
+const byName = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
+
 // Placeholder primary categories cycled across projects — edit freely later.
 // "Print" is intentionally excluded here: every project is surfaced under the
 // Print filter (Dina's drawings & paintings) via the Projects section, so each
@@ -81,17 +90,19 @@ const natCompare = (a, b) =>
 const toUrl = (folder, file) =>
   `/${encodeURIComponent(folder)}/${encodeURIComponent(file)}`;
 
+const isDir = (name) => {
+  try {
+    return statSync(join(publicDir, name)).isDirectory();
+  } catch {
+    return false;
+  }
+};
+
 function listPortfolioFolders() {
-  return readdirSync(publicDir)
-    .filter((name) => {
-      if (!/^Portfolio-\d+$/i.test(name)) return false;
-      try {
-        return statSync(join(publicDir, name)).isDirectory();
-      } catch {
-        return false;
-      }
-    })
+  const numbered = readdirSync(publicDir)
+    .filter((name) => /^Portfolio-\d+$/i.test(name) && isDir(name))
     .sort(natCompare);
+  return [...numbered, ...EXTRA_FOLDERS.filter(isDir)];
 }
 
 function buildProjects() {
@@ -102,7 +113,7 @@ function buildProjects() {
     const num = Number(folder.match(/\d+/)?.[0] ?? i + 1);
     const files = readdirSync(join(publicDir, folder))
       .filter((f) => IMAGE_RE.test(f))
-      .sort(natCompare);
+      .sort(EXTRA_FOLDERS.includes(folder) ? byName : natCompare);
 
     if (files.length === 0) return;
 

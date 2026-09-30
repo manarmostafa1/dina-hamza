@@ -51,9 +51,14 @@ export default function ProjectDetail() {
 
   /* lightbox index into project.images: 0 = the banner */
   const [active, setActive] = useState<number | null>(null);
-  /* one lightbox over every image: the banner, then the gallery */
-  const images = project ? [project.banner, ...project.gallery] : [];
+  /* one lightbox over every image: the banner, then the gallery. When
+     the gallery already starts with the banner (bannerInGallery), the
+     lightbox is just the gallery, so no image is walked through twice;
+     `offset` maps a gallery tile to its lightbox index either way. */
   const gallery = project ? project.gallery : [];
+  const bannerInGallery = !!project && gallery[0]?.src === project.banner.src;
+  const images = !project ? [] : bannerInGallery ? gallery : [project.banner, ...gallery];
+  const offset = images.length - gallery.length;
 
   const close = useCallback(() => setActive(null), []);
   const go = useCallback(
@@ -135,9 +140,11 @@ export default function ProjectDetail() {
 
           <header className="case-head">
             <Reveal>
+              {/* a project without a year: "category · NN / NN" */}
               <Eyebrow>
-                {project.category} · {project.year} · {pad(index + 1)} /{" "}
-                {pad(projects.length)}
+                {[project.category, project.year, `${pad(index + 1)} / ${pad(projects.length)}`]
+                  .filter(Boolean)
+                  .join(" · ")}
               </Eyebrow>
             </Reveal>
             <Reveal index={1}>
@@ -189,13 +196,13 @@ export default function ProjectDetail() {
                   <RevealItem as="li" key={img.src} className="case-masonry__item">
                     <button
                       type="button"
-                      onClick={() => setActive(i + 1)}
-                      aria-label={`Open ${project.title}, image ${i + 2} of ${images.length}`}
+                      onClick={() => setActive(i + offset)}
+                      aria-label={`Open ${project.title}, image ${i + offset + 1} of ${images.length}`}
                       className="case-shot"
                     >
                       <img
                         src={img.src}
-                        alt={`${project.title} — image ${i + 2}`}
+                        alt={`${project.title} — image ${i + offset + 1}`}
                         width={img.width ?? undefined}
                         height={img.height ?? undefined}
                         loading="lazy"
