@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { motion, useInView } from "framer-motion";
 import { Section } from "@/components/ui/Section";
 import { SectionHeader } from "@/components/ui/SectionHeader";
@@ -15,7 +15,8 @@ import { cn } from "@/lib/utils";
  *  THE ROAD HERE — a pencil-drawn road, oldest chapter first.
  *
  *  ≥1024px  horizontal: years row · road · content row, all on one
- *           4-column grid so the columns line up. The road is an SVG
+ *           grid with a column per chapter (--road-cols, from the data)
+ *           so the columns line up. The road is an SVG
  *           measured to the grid's width; a dot marks the start of each
  *           column and a pencil sits at the end of the line, tip on it.
  *  <1024px  vertical: the road runs down the left edge, a dot at each
@@ -274,10 +275,12 @@ function RoadHorizontal() {
     at: i * (col + COL_GAP) + DOT + 1,
     current: ch.current,
   }));
+  /* the CSS grid gets the same column count the dots are measured with */
+  const cols = { "--road-cols": chapters.length } as CSSProperties;
 
   return (
     <div ref={wrap} className="road road--h">
-      <div aria-hidden="true" className="road-grid">
+      <div aria-hidden="true" className="road-grid" style={cols}>
         {chapters.map((ch) => (
           <Year key={ch.year} ch={ch} />
         ))}
@@ -292,7 +295,7 @@ function RoadHorizontal() {
           reduced={reduced}
         />
       </div>
-      <ol className="road-grid road-list">
+      <ol className="road-grid road-list" style={cols}>
         {chapters.map((ch, i) => (
           <li key={ch.year}>
             <span className="sr-only">

@@ -23,6 +23,12 @@ import { dims } from "@/data/imageMeta";
 const PHOTO = "/about/showcase-dina.webp";
 const photo = dims(PHOTO);
 
+/* "At heart" panel: two labeled tag groups */
+const HEART_TAGS = [
+  { id: "teaching", label: "Teaching:", tags: ["Drawing", "Painting", "All Ages", "All Skill Levels"] },
+  { id: "practice", label: "Art Practice:", tags: ["Oil", "Acrylic", "Pastel", "Charcoal", "Mixed Media"] },
+];
+
 /** In-page link that goes through the smooth scroller. */
 function Anchor({
   to,
@@ -58,7 +64,7 @@ export function About() {
         eyebrow="About"
         title="Designer by craft, artist at heart."
         accent="heart"
-        lead="I'm Dina, a graphic designer and painter from Egypt. I build brand identities, visuals and motion, and I teach drawing to kids and adults."
+        lead="I’m Dina, a Senior Graphic Designer and Art Educator. I create thoughtful visual identities, campaigns, digital experiences and motion content — combining strategic thinking with a strong artistic perspective."
       />
 
       <div className="about__body">
@@ -112,9 +118,9 @@ export function About() {
                 </ul>
               </div>
               <div className="about-panel__foot">
-                <p className="about-panel__note">Designing for 3+ years with</p>
+                <p className="about-panel__note">Designing for 5+ years with</p>
                 <p className="about-panel__strong">
-                  Illustrator, Photoshop, After Effects, Premiere Pro
+                  Illustrator, Photoshop, InDesign, Premiere Pro
                 </p>
               </div>
             </article>
@@ -125,21 +131,29 @@ export function About() {
                 <span className="about-panel__label">At heart</span>
                 <div className="about-panel__text">
                   <h3 className="about-panel__title">
-                    Painter and drawing teacher
+                    ART EDUCATOR & VISUAL ARTIST
                   </h3>
                   <p className="about-panel__body">
-                    Oil, acrylic and pastel keep my hands busy between projects.
-                    I also teach drawing to kids and adults, and that practice
-                    feeds every design I make.
+                    {"I teach drawing and painting to children, teens, and adults, working across different skill levels and artistic techniques. Alongside teaching, I create original artworks exploring a variety of traditional and mixed-media techniques."}
                   </p>
                 </div>
-                <ul className="about-panel__tags">
-                  {["Oil", "Acrylic", "Pastel", "Portraits"].map((t) => (
-                    <li key={t} className="about-panel__tag">
-                      {t}
-                    </li>
+                {/* two labeled tag groups, 16px apart */}
+                <div className="about-panel__groups">
+                  {HEART_TAGS.map((g) => (
+                    <div key={g.id} className="about-panel__group">
+                      <p id={`about-tags-${g.id}`} className="about-panel__group-label">
+                        {g.label}
+                      </p>
+                      <ul aria-labelledby={`about-tags-${g.id}`} className="about-panel__tags">
+                        {g.tags.map((t) => (
+                          <li key={t} className="about-panel__tag">
+                            {t}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
               <div className="about-panel__foot">
                 <p className="about-panel__note">Classes for kids and adults</p>

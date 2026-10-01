@@ -1,22 +1,28 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { ProjectGrid } from "@/components/ui/ProjectGrid";
+import { PhotoGrid } from "@/components/ui/PhotoGrid";
+import { Lightbox } from "@/components/ui/Lightbox";
 import { Footer } from "@/components/sections/Footer";
-import { projects } from "@/data/portfolio";
+import { coursePhotos, coursesPage as copy } from "@/data/courses";
 
 /* ------------------------------------------------------------------ *
- *  /work — every project.
+ *  /courses — photos from the classes.
  *
- *  One full-bleed dark block (rounded at the bottom) holding the back
- *  link, the page header and a uniform 3 / 2 / 1-column grid of the
- *  SAME card as the home page. Then a small light CTA and the footer.
- *  Scroll-to-top on arrival is handled by SmoothScroll (route change).
+ *  The /work page's frame: one full-bleed dark block (back link, page
+ *  header, the photos), then a small light CTA and the footer. The
+ *  photos use the project pages' gallery (PhotoGrid: equal tiles, each
+ *  photo whole on its blurred backdrop) and lightbox. Data:
+ *  src/data/courses.ts. Scroll-to-top on arrival is handled by
+ *  SmoothScroll (route change).
  * ------------------------------------------------------------------ */
-const TITLE = "All projects · Dina Hamza";
+const TITLE = "Courses · Dina Hamza";
+const LABEL = "Drawing & Painting Classes";
 
-export default function Work() {
+export default function CoursesPage() {
+  const [active, setActive] = useState<number | null>(null);
+
   useEffect(() => {
     const prev = document.title;
     document.title = TITLE;
@@ -25,7 +31,7 @@ export default function Work() {
     };
   }, []);
 
-  const n = projects.length;
+  const n = coursePhotos.length;
 
   return (
     <main id="main">
@@ -38,38 +44,42 @@ export default function Work() {
 
           <SectionHeader
             as="h1"
-            eyebrow="Selected work"
-            title="All projects."
-            accent="projects"
+            eyebrow={copy.eyebrow}
+            title={copy.title}
+            accent={copy.accent}
             lead={
               <>
-                Brand identities, campaigns, packaging and illustration.
+                {copy.lead}
                 <span className="work-page__count">
-                  {n} {n === 1 ? "project" : "projects"}
+                  {n} {n === 1 ? "photo" : "photos"}
                 </span>
               </>
             }
             tone="dark"
           />
 
-          <ProjectGrid projects={projects} />
+          <PhotoGrid images={coursePhotos} label={LABEL} total={n} onOpen={setActive} />
         </div>
       </section>
 
       <section data-surface="light" data-nav="light" className="work-cta section lift-off">
         <div className="container-wide work-cta__inner">
-          <p className="work-cta__text">Have a project in mind?</p>
+          <p className="work-cta__text">{copy.cta}</p>
+          {/* to the home page's contact form, with the "Drawing class"
+              chip selected (Contact.tsx reads ?service=) */}
           <Link
-            to="/#contact"
+            to="/?service=drawing-class#contact"
             className="btn btn--lg bg-content-1 text-surface-1 transition-colors duration-ui ease-ui hover:bg-accent-fill hover:text-accent-contrast"
           >
-            Get in touch
+            {copy.ctaButton}
             <ArrowUpRight size={16} aria-hidden="true" />
           </Link>
         </div>
       </section>
 
       <Footer />
+
+      <Lightbox images={coursePhotos} index={active} onIndex={setActive} label={LABEL} />
     </main>
   );
 }

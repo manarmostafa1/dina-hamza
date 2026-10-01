@@ -119,8 +119,9 @@ export function Navbar() {
   /* a route change closes it too */
   useEffect(() => setOpen(false), [pathname]);
 
-  /* Which link is active. /work and every project page → Work. On the
-     home page, the section crossing the middle band of the viewport. */
+  /* Which link is active. /work and every project page → Work; /courses
+     → Courses. On the home page, the section crossing the middle band of
+     the viewport. */
   const [inView, setInView] = useState<string | null>(null);
   useEffect(() => {
     if (pathname !== "/") {
@@ -139,14 +140,19 @@ export function Navbar() {
     els.forEach((e) => io.observe(e));
     return () => io.disconnect();
   }, [pathname]);
-  const active = pathname.startsWith("/work") ? "work" : inView;
+  const active = pathname.startsWith("/work")
+    ? "work"
+    : pathname.startsWith("/courses")
+      ? "courses"
+      : inView;
 
   const go = (id: string) => {
     const wasOpen = open;
     setOpen(false);
-    /* Work is its own page; the rest are sections of the home page. */
-    if (id === "work") {
-      navigate("/work");
+    /* Work and Courses are pages of their own; the rest are sections of
+       the home page. */
+    if (id === "work" || id === "courses") {
+      navigate(`/${id}`);
       return;
     }
     if (pathname !== "/") {
@@ -199,7 +205,7 @@ export function Navbar() {
               <button
                 key={l.id}
                 onClick={() => go(l.id)}
-                aria-current={active === l.id ? (l.id === "work" ? "page" : "location") : undefined}
+                aria-current={active === l.id ? (pathname === "/" ? "location" : "page") : undefined}
                 className="nav-link tap-44 rounded-pill px-xs text-small font-medium text-content-2 transition-colors duration-ui ease-ui hover:bg-content-1/5 hover:text-content-1"
               >
                 {l.label}
@@ -249,7 +255,7 @@ export function Navbar() {
                     <button
                       type="button"
                       onClick={() => go(l.id)}
-                      aria-current={active === l.id ? (l.id === "work" ? "page" : "location") : undefined}
+                      aria-current={active === l.id ? (pathname === "/" ? "location" : "page") : undefined}
                       className="mobile-menu__link"
                     >
                       {l.label}

@@ -282,7 +282,13 @@
    * ---------------------------------------------------------------- */
   --work-py: 4.5rem; /* 72px phones; 120px from 768 */
   --work-radius: var(--radius-lg); /* 24px mobile; 40px from 768 */
-  --work-card-radius: 1.25rem; /* 20px, every card */
+  --work-card-radius: 1.125rem; /* 18px, every card */
+  /* "contain + blurred backdrop" frames (ContainImage): the backdrop's
+     blur (16px on phones, cheaper to paint; 28px from 768), its hover
+     blur, and the space kept around the contained image */
+  --cframe-blur: 16px;
+  --cframe-blur-hover: 20px;
+  --cframe-pad: 16px;
   --c-card-shade: 20 26 22; /* #141A16 — the card title shade */
   --ease-work: cubic-bezier(0.2, 0.8, 0.2, 1); /* image zoom, 700ms */
 
@@ -297,8 +303,12 @@
   --about-py: 4.5rem; /* 72px mobile; 112px from 768 */
   --about-container: 1200px;
   --about-block-gap: var(--space-64); /* header · stage · footer row */
-  --about-stage-h: 35rem; /* 560px */
-  --about-panel-h: 32.5rem; /* 520px */
+  /* Fits the "At heart" panel's copy (title, paragraph, two labeled tag
+     groups, foot) in its 330px column: 685px needed. Stage = panel + the
+     20px above and below. Desktop (1240+) only; narrower screens size to
+     their content. */
+  --about-stage-h: 45.5rem; /* 728px */
+  --about-panel-h: 43rem; /* 688px */
   --about-panel-top: 1.25rem; /* panels start 20px below the photo */
   --about-panel-gap: var(--space-16);
   --about-panel-pad: var(--space-48);
@@ -418,6 +428,8 @@
     --work-py: 7.5rem; /* 120px */
     --contact-py: 7.5rem; /* 120px */
     --cfooter-giant: 17vw;
+    --cframe-blur: 28px;
+    --cframe-blur-hover: 34px;
     --work-radius: 2.5rem; /* 40px */
     --radius-surface: 2.5rem;
     --nav-h: 4.5rem;

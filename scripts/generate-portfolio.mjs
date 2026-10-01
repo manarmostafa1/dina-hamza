@@ -38,9 +38,19 @@ const MERGE_INTO = {
    after all the Portfolio-N projects, in this order. Their files are
    taken in plain A→Z name order: the natural sort used for Portfolio-N
    ("img2" before "img10") reads hash-like names such as "0e92…" as the
-   number 0 and scrambles them. File names must be lowercase with no
-   spaces (they are URLs on a case-sensitive host). */
-const EXTRA_FOLDERS = ["travel"];
+   number 0 and scrambles them. `files` instead lists exactly which
+   images, in which order — for a folder shared with other uses (the
+   course photos in /teaching are not part of the project). File names
+   must be lowercase with no spaces (they are URLs on a case-sensitive
+   host). */
+/* (public/teaching holds the course photos and the /courses page's
+   photos — see src/data/courses.ts — not a project.) */
+const EXTRA_FOLDERS = [{ folder: "travel" }];
+
+/* Projects listed first, in this order; the rest keep their place after
+   them. Only the order changes — slugs, categories and URLs don't. */
+const LEAD_FOLDERS = ["Portfolio-15"];
+const extra = (folder) => EXTRA_FOLDERS.find((e) => e.folder === folder);
 const byName = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
 
 // Placeholder primary categories cycled across projects — edit freely later.
@@ -102,7 +112,7 @@ function listPortfolioFolders() {
   const numbered = readdirSync(publicDir)
     .filter((name) => /^Portfolio-\d+$/i.test(name) && isDir(name))
     .sort(natCompare);
-  return [...numbered, ...EXTRA_FOLDERS.filter(isDir)];
+  return [...numbered, ...EXTRA_FOLDERS.map((e) => e.folder).filter(isDir)];
 }
 
 function buildProjects() {
@@ -111,9 +121,14 @@ function buildProjects() {
 
   folders.forEach((folder, i) => {
     const num = Number(folder.match(/\d+/)?.[0] ?? i + 1);
-    const files = readdirSync(join(publicDir, folder))
-      .filter((f) => IMAGE_RE.test(f))
-      .sort(EXTRA_FOLDERS.includes(folder) ? byName : natCompare);
+    const present = readdirSync(join(publicDir, folder)).filter((f) => IMAGE_RE.test(f));
+    const listed = extra(folder)?.files;
+    for (const f of listed ?? []) {
+      if (!present.includes(f)) console.warn(`[portfolio] ${folder}/${f} is listed but missing`);
+    }
+    const files = listed
+      ? listed.filter((f) => present.includes(f))
+      : present.sort(extra(folder) ? byName : natCompare);
 
     if (files.length === 0) return;
 
@@ -165,6 +180,11 @@ function buildProjects() {
     projects.splice(projects.indexOf(src), 1);
     redirects[src.slug] = dst.slug;
   }
+
+  /* LEAD_FOLDERS to the front (after the categories were assigned, so
+     they don't change) */
+  const lead = LEAD_FOLDERS.map((f) => projects.find((p) => p.folder === f)).filter(Boolean);
+  projects.splice(0, projects.length, ...lead, ...projects.filter((p) => !lead.includes(p)));
 
   return {
     projects: projects.map(({ hashes, ...p }) => p),

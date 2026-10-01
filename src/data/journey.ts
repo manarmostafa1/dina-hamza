@@ -17,7 +17,7 @@ export interface Chapter {
 }
 
 export const journeyLead =
-  "Three years of in-house and remote design work after a degree in Applied Arts, always with a pencil somewhere nearby.";
+  "Five years of freelance, in-house and remote design work, always with a pencil somewhere nearby.";
 
 export const education = {
   degree: "B.A. Applied Arts, Advertising and Graphics",
@@ -25,6 +25,14 @@ export const education = {
 };
 
 export const chapters: Chapter[] = [
+  {
+    year: "2021",
+    range: "2021 — 2023",
+    role: "Freelance Graphic Designer",
+    company: "Remote · Egypt",
+    description:
+      "Worked on a range of freelance design projects, creating social media content, branding materials, print designs and visual assets for different clients and industries.",
+  },
   {
     year: "2022",
     range: "Aug — Sep 2022",

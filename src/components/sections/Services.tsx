@@ -65,7 +65,7 @@ const left: CardSpec[] = [
 ];
 
 const right: CardSpec[] = [
-  { service: byTitle("Video and motion"), icon: <Clapperboard />, tone: "clay", tagStyle: "solid" },
+  { service: byTitle("Video Editing"), icon: <Clapperboard />, tone: "clay", tagStyle: "solid" },
   { service: byTitle("Illustration and digital art"), icon: <PenTool />, tone: "line", tagStyle: "outline" },
 ];
 

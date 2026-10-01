@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { Section } from "@/components/ui/Section";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { scrollToId } from "@/components/shell/SmoothScroll";
@@ -13,7 +14,8 @@ import {
 /* ------------------------------------------------------------------ *
  *  Teaching — an open sketchbook.
  *
- *      [01][02][03][04][05][06]      divider tabs (a WAI-ARIA tablist)
+ *      [01][02][03][04][05]          divider tabs (a WAI-ARIA tablist),
+ *                                    one per class in data/teaching.ts
  *      ┌────────────┬─┬────────────┐
  *      │  artwork   │○│  the class │  left page · spiral · right page
  *      └────────────┴─┴────────────┘
@@ -210,51 +212,27 @@ export function Courses() {
           </div>
         </div>
       </div>
+
+      {/* the class photos have their own page */}
+      <p className="book-more">
+        <Link to="/courses" className="book-more__link tap-44">
+          See photos from my classes →
+        </Link>
+      </p>
     </Section>
   );
 }
 
 function Artwork({ course }: { course: TeachingCourse }) {
   const { art } = course;
-  if (art.kind === "image") {
-    return (
-      <img
-        src={art.src}
-        alt={art.alt}
-        loading="lazy"
-        decoding="async"
-        className="book-art__img"
-        style={{ objectPosition: art.pos }}
-      />
-    );
-  }
   return (
-    <div
-      role="img"
-      aria-label={`${course.caption} — artwork coming soon`}
-      className={`book-art__img book-placeholder book-placeholder--${art.tone}`}
-    >
-      {art.icon === "pencil" ? <PencilSketchIcon /> : <TabletIcon />}
-    </div>
-  );
-}
-
-function PencilSketchIcon() {
-  return (
-    <svg viewBox="0 0 96 96" aria-hidden="true" className="book-placeholder__icon">
-      <path d="M14 70 C 26 52, 40 78, 52 60 S 74 48, 82 62" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-      <path d="M58 18 L74 34 L40 68 L24 70 L26 54 Z" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round" />
-      <path d="M52 24 L68 40" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function TabletIcon() {
-  return (
-    <svg viewBox="0 0 96 96" aria-hidden="true" className="book-placeholder__icon">
-      <rect x="16" y="14" width="52" height="68" rx="7" fill="none" stroke="currentColor" strokeWidth="2.5" />
-      <path d="M26 58 C 34 44, 44 62, 56 40" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-      <path d="M80 22 L86 28 L62 74 L56 76 L58 70 Z" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round" />
-    </svg>
+    <img
+      src={art.src}
+      alt={art.alt}
+      loading="lazy"
+      decoding="async"
+      className="book-art__img"
+      style={{ objectPosition: art.pos }}
+    />
   );
 }

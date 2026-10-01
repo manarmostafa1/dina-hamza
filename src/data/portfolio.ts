@@ -18,6 +18,9 @@ export type Project = Omit<PortfolioProject, "description" | "year"> & {
   year?: string;
   banner: PortfolioImage;
   gallery: PortfolioImage[];
+  /** The image on the project's card: `cardImage` from projectNames.ts,
+   *  else the banner. */
+  card: PortfolioImage;
 };
 export type { PortfolioProject };
 
@@ -36,6 +39,15 @@ export const projects: Project[] = portfolioProjects.map((p) => {
     description: meta?.description ?? (p.description ? [p.description] : []),
     banner: p.images[0] ?? p.cover,
     gallery: meta?.bannerInGallery ? p.images : p.images.slice(1),
+    /* one of the project's own images (keeps its width / height), or a
+       plain URL if it isn't one of them */
+    card: !meta?.cardImage
+      ? p.images[0] ?? p.cover
+      : p.images.find((im) => im.src === meta.cardImage) ?? {
+          src: meta.cardImage,
+          width: null,
+          height: null,
+        },
   };
 });
 

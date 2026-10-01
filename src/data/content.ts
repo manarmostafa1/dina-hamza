@@ -232,7 +232,7 @@ export const services: Service[] = [
   { title: "Social media design", description: "Content systems and templates that keep feeds consistent, on-brand and thumb-stopping." },
   { title: "Print design", description: "Editorial, packaging and collateral prepared print-ready, with a real love for paper." },
   { title: "Presentation design", description: "Considered, story-first decks and pitch designs that make ideas land with clarity." },
-  { title: "Video and motion", description: "Short-form video, animated GIFs and motion graphics — cut, composited and colour-graded for the feed.", tags: ["Reels", "Colour grading", "Compositing"] },
+  { title: "Video Editing", description: "Editing engaging video content for social media and digital platforms — from cutting and sequencing to pacing, sound design and colour grading.", tags: ["Reels", "Colour grading", "Compositing"] },
   { title: "Illustration and digital art", description: "Custom traditional and digital illustration, character design and editorial artwork.", tags: ["Character", "Editorial", "Retouch"] },
 ];
 

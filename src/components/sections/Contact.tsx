@@ -1,4 +1,5 @@
-import { useRef, useState, type ComponentType, type FormEvent } from "react";
+import { useEffect, useRef, useState, type ComponentType, type FormEvent } from "react";
+import { useLocation } from "react-router-dom";
 import { useInView } from "framer-motion";
 import {
   ArrowUpRight,
@@ -69,6 +70,16 @@ export function Contact() {
     setServices((cur) =>
       cur.includes(s) ? cur.filter((x) => x !== s) : [...cur, s]
     );
+
+  /* A link can pre-select a chip: /?service=drawing-class#contact (the
+     "Book a class" button on /courses). The value is the chip's label,
+     lowercased with dashes; anything that isn't a chip is ignored. */
+  const { search } = useLocation();
+  useEffect(() => {
+    const want = new URLSearchParams(search).get("service");
+    const chip = SERVICES.find((s) => s.toLowerCase().replace(/\s+/g, "-") === want);
+    if (chip) setServices([chip]);
+  }, [search]);
 
   const validate = (): Errors => {
     const e: Errors = {};

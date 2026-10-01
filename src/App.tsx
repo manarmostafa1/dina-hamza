@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { SmoothScroll, scrollToId } from "@/components/shell/SmoothScroll";
 import { Navbar } from "@/components/shell/Navbar";
 import { Loader } from "@/components/shell/Loader";
@@ -7,6 +7,7 @@ import { ScrollProgress } from "@/components/shell/ScrollProgress";
 import Home from "@/pages/Home";
 import ProjectDetail from "@/pages/ProjectDetail";
 import Work from "@/pages/Work";
+import CoursesPage from "@/pages/CoursesPage";
 
 /** Scrolls to a section when the URL carries a hash (e.g. /#work). */
 function HashHandler() {
@@ -36,7 +37,10 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/work" element={<Work />} />
+        {/* the class photos were a project before they got /courses */}
+        <Route path="/work/teaching" element={<Navigate to="/courses" replace />} />
         <Route path="/work/:slug" element={<ProjectDetail />} />
+        <Route path="/courses" element={<CoursesPage />} />
         <Route path="*" element={<Home />} />
       </Routes>
     </SmoothScroll>

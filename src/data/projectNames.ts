@@ -19,6 +19,10 @@
  *                   eyebrow then shows just "category · NN / NN")
  *    bannerInGallery  the gallery lists every image, the banner too
  *                   (default: the gallery starts after the banner)
+ *    cardImage      the image on the project's card (home grid, /work):
+ *                   the URL of one of its images, as it appears in
+ *                   portfolio.generated.ts (e.g. a square post, for a
+ *                   cleaner card). Default: the banner.
  *
  *  A folder with no entry keeps its generated "Project NN" title and
  *  is not featured. Portfolio-6 and Portfolio-7 are part of
@@ -31,6 +35,7 @@ export type ProjectMeta = {
   category?: string;
   year?: string | null;
   bannerInGallery?: boolean;
+  cardImage?: string;
 };
 
 export const projectMeta: Record<string, ProjectMeta> = {
@@ -121,7 +126,7 @@ export const projectMeta: Record<string, ProjectMeta> = {
     ],
   },
   "Portfolio-15": {
-    title: `EverLast Wellness | 10 Years Anniversary Branding`,
+    title: `10 Years Anniversary Branding`,
     featured: true,
     description: [
       `To celebrate Everlast’s 10th anniversary, we developed a comprehensive visual campaign that reflects the brand’s journey, achievements, and commitment to excellence over the past decade. The project included social media creatives, promotional materials, and anniversary-themed branding designed to create a memorable and cohesive celebration across all touchpoints.`,
@@ -142,13 +147,13 @@ export const projectMeta: Record<string, ProjectMeta> = {
 
 /** The home page grid, in this order. Each of these has featured: true. */
 export const FEATURED_ORDER: string[] = [
+  "Portfolio-15",
   "Portfolio-1",
   "Portfolio-2",
   "Portfolio-3",
   "Portfolio-4",
   "Portfolio-5",
   "Portfolio-8",
-  "Portfolio-15",
   "Portfolio-9",
   "Portfolio-14",
 ];
